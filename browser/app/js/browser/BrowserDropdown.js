@@ -88,21 +88,6 @@ export class BrowserDropdown extends React.Component {
           </Dropdown.Toggle>
           <Dropdown.Menu className="dropdown-menu-right">
             <li>
-              <a target="_blank" href="https://github.com/minio/minio">
-                GitHub <i className="fab fa-github" />
-              </a>
-            </li>
-            <li>
-              <a href="" onClick={this.fullScreen}>
-                Fullscreen <i className="fas fa-expand" />
-              </a>
-            </li>
-            <li>
-              <a target="_blank" href="https://docs.min.io/">
-                Documentation <i className="fas fa-book" />
-              </a>
-            </li>
-            <li>
               <a target="_blank" href="https://slack.min.io">
                 Ask for help <i className="fas fa-question-circle" />
               </a>
@@ -115,17 +100,6 @@ export class BrowserDropdown extends React.Component {
                 <AboutModal
                   serverInfo={serverInfo}
                   hideAbout={this.hideAbout.bind(this)}
-                />
-              )}
-            </li>
-            <li>
-              <a href="" onClick={this.showChangePassword.bind(this)}>
-                Change Password <i className="fas fa-cog" />
-              </a>
-              {this.state.showChangePasswordModal && (
-                <ChangePasswordModal
-                  serverInfo={serverInfo}
-                  hideChangePassword={this.hideChangePassword.bind(this)}
                 />
               )}
             </li>
