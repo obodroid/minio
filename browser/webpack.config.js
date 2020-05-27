@@ -71,6 +71,7 @@ var exports = {
     historyApiFallback: {
       index: '/minio/'
     },
+    host: '0.0.0.0',
     proxy: {
       '/minio/webrpc': {
         target: 'http://localhost:9000',
