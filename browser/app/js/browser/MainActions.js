@@ -28,9 +28,6 @@ export const MainActions = ({
   showMakeBucketModal
 }) => {
   const uploadTooltip = <Tooltip id="tt-upload-file">Upload file</Tooltip>
-  const makeBucketTooltip = (
-    <Tooltip id="tt-create-bucket">Create bucket</Tooltip>
-  )
   const onFileUpload = e => {
     e.preventDefault()
     let files = e.target.files
@@ -67,21 +64,6 @@ export const MainActions = ({
               </label>
             </a>
           </OverlayTrigger>
-          {loggedIn && (
-            <OverlayTrigger placement="left" overlay={makeBucketTooltip}>
-              <a
-                href="#"
-                id="show-make-bucket"
-                className="feba-btn feba-bucket"
-                onClick={e => {
-                  e.preventDefault()
-                  showMakeBucketModal()
-                }}
-              >
-                <i className="far fa-hdd" />
-              </a>
-            </OverlayTrigger>
-          )}
         </Dropdown.Menu>
       </Dropdown>
     )
