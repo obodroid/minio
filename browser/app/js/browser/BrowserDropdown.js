@@ -88,7 +88,7 @@ export class BrowserDropdown extends React.Component {
           </Dropdown.Toggle>
           <Dropdown.Menu className="dropdown-menu-right">
             <li>
-              <a target="_blank" href="https://slack.min.io">
+              <a target="_blank" href="https://lin.ee/xPAgTiJ">
                 Ask for help <i className="fas fa-question-circle" />
               </a>
             </li>
