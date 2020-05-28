@@ -18,6 +18,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Dropdown } from "react-bootstrap"
 import ShareObjectModal from "./ShareObjectModal"
+import RenameObjectModal from "./RenameObjectModal"
 import DeleteObjectConfirmModal from "./DeleteObjectConfirmModal"
 import PreviewObjectModal from "./PreviewObjectModal"
 
@@ -35,6 +36,7 @@ export class ObjectActions extends React.Component {
     this.state = {
       showDeleteConfirmation: false,
       showPreview: false,
+      showRenameObject: false
     }
   }
   shareObject(e) {
@@ -64,6 +66,7 @@ export class ObjectActions extends React.Component {
     const { getObjectURL } = this.props
     getObjectURL(objectname, callback)
   }
+
   showPreviewModal(e) {
     e.preventDefault()
     this.setState({ showPreview: true })
@@ -73,6 +76,18 @@ export class ObjectActions extends React.Component {
       showPreview: false,
     })
   }
+  showRenameObjectModal(e) {
+    e.preventDefault()
+    this.setState({
+      showRenameObject: true
+    })
+  }
+  hideRenameObjectModal() {
+    this.setState({
+      showRenameObject: false
+    })
+  }
+
   render() {
     const { object, showShareObjectModal, shareObjectName } = this.props
     return (
@@ -98,6 +113,13 @@ export class ObjectActions extends React.Component {
           <a
             href=""
             className="fiad-action"
+            onClick={this.showRenameObjectModal.bind(this)}
+          >
+            <i className="fas fa-edit" />
+          </a>
+          <a
+            href=""
+            className="fiad-action"
             onClick={this.showDeleteConfirmModal.bind(this)}
           >
             <i className="fas fa-trash-alt" />
@@ -118,6 +140,13 @@ export class ObjectActions extends React.Component {
             hidePreviewModal={this.hidePreviewModal.bind(this)}
             getObjectURL={this.getObjectURL.bind(this)}
           />
+        )}
+        {this.state.showRenameObject && (
+          <RenameObjectModal
+            object={object}
+            hideRenameObjectModal={this.hideRenameObjectModal.bind(this)}
+          />
+
         )}
       </Dropdown>
     )
