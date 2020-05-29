@@ -44,10 +44,10 @@ export const SideBar = ({ sidebarOpen, clickOutside }) => {
         <div className="fes-header clearfix hidden-sm hidden-xs">
           <img src={logo} alt="" />
         </div>
-        {/* <div className="fes-list">
+        <div className="fes-list">
           {web.LoggedIn() && <BucketSearch />}
           <BucketList />
-        </div> */}
+        </div>
         <Host />
       </div>
     </ClickOutHandler>
