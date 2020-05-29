@@ -23,6 +23,8 @@ import InputGroup from "./InputGroup"
 import web from "../web"
 import { Redirect, Link } from "react-router-dom"
 import OpenIDLoginButton from './OpenIDLoginButton'
+import { ADMIN_USERNAME } from "../constants"
+import storage from 'local-storage-fallback'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -62,6 +64,7 @@ export class Login extends React.Component {
       showAlert("danger", message)
       return
     }
+
     web
       .Login({
         username: this.state.accessKey,
@@ -72,6 +75,11 @@ export class Login extends React.Component {
         clearAlert()
 
         history.push("/")
+
+        // check is admin or not
+        if (this.state.accessKey == ADMIN_USERNAME) {
+          storage.setItem("isAdmin", true)
+        }
       })
       .catch(e => {
         showAlert("danger", e.message)
@@ -154,10 +162,10 @@ export class Login extends React.Component {
                     Log in with OpenID
                   </OpenIDLoginButton>
                 ) : (
-                  <Link to={"/login/openid"} className="btn openid-btn">
-                    Log in with OpenID
-                  </Link>
-                )
+                    <Link to={"/login/openid"} className="btn openid-btn">
+                      Log in with OpenID
+                    </Link>
+                  )
               }
             </div>
           )}

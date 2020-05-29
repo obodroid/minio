@@ -71,6 +71,7 @@ class Web {
   }
   Logout() {
     storage.removeItem('token')
+    storage.removeItem('isAdmin')
   }
   GetToken() {
     return storage.getItem('token')

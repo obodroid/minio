@@ -21,6 +21,7 @@ import web from "../web"
 import * as actionsBuckets from "../buckets/actions"
 import * as uploadsActions from "../uploads/actions"
 import { getPrefixWritable } from "../objects/selectors"
+import storage from 'local-storage-fallback'
 
 export const MainActions = ({
   prefixWritable,
@@ -42,6 +43,7 @@ export const MainActions = ({
   }
 
   const loggedIn = web.LoggedIn()
+  const isAdmin = storage.getItem("isAdmin")
 
   if (loggedIn || prefixWritable) {
     return (
@@ -67,7 +69,7 @@ export const MainActions = ({
               </label>
             </a>
           </OverlayTrigger>
-          {loggedIn && (
+          {isAdmin && (
             <OverlayTrigger placement="left" overlay={makeBucketTooltip}>
               <a
                 href="#"
