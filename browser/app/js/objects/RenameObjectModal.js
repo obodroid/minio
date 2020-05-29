@@ -9,21 +9,27 @@ export class RenameObjectModal extends React.Component {
         this.state = {
             objectName: this.props.object.name
         }
+        this.bucketName = window.location.pathname.split('/')[2]
+        console.log(this.bucketName)
     }
 
     submit() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                "bucketName":"doctor-a",
-                "oldObjectName":"test2.xml",
-                "newObjectName":"test3.xml" 
+            body: JSON.stringify({
+                "bucketName": this.bucketName,
+                "oldObjectName": this.props.object.name,
+                "newObjectName": this.state.objectName
             })
         };
-        fetch('http://localhost.typicode.com/bucket/rename-object', requestOptions)
+        fetch('http://localhost:3000/bucket/rename-object', requestOptions)
             .then(response => response.json())
-            .then(data => this.setState({ postId: data.id }));
+            .then(data => {
+                console.log(data)
+                this.props.hideRenameObjectModal()
+                window.location.reload(false);
+            });
     }
 
     render() {
@@ -53,7 +59,7 @@ export class RenameObjectModal extends React.Component {
                 </ModalBody>
                 <div className="modal-footer">
 
-                    <button onClick={this.submit} className="btn btn-success">Rename</button>
+                    <button onClick={this.submit.bind(this)} className="btn btn-success">Rename</button>
 
                     <button className="btn btn-link" onClick={hideRenameObjectModal}>
                         Cancel
