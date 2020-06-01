@@ -13,17 +13,16 @@ RUN  set -ex; \
      fetch_deps='gcc libc-dev'; \
      apt-get update; \
      apt-get install -y --no-install-recommends $fetch_deps; \
-     rm -rf /var/lib/apt/lists/*; \
+    #  rm -rf /var/lib/apt/lists/*; \
      gcc -Wall \
          /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec; \
      chown root:root /usr/local/bin/su-exec; \
-     chmod 0755 /usr/local/bin/su-exec; \
-     rm /usr/local/bin/su-exec.c; \
-     \
-     apt-get purge -y --auto-remove $fetch_deps
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
-
+     chmod 0755 /usr/local/bin/su-exec;
+    #  rm /usr/local/bin/su-exec.c; \
+    #  \
+    #  apt-get purge -y --auto-remove $fetch_deps
+# RUN apt-get clean
+# RUN rm -rf /var/lib/apt/lists/*
 ENV PATH=$PATH:/root/go/bin
 
 RUN go get github.com/go-bindata/go-bindata/go-bindata && \
@@ -31,28 +30,29 @@ RUN go get github.com/go-bindata/go-bindata/go-bindata && \
 
 COPY dockerscripts/docker-entrypoint.sh /usr/bin/
 COPY . /usr/bin
-COPY minio /usr/bin/
+# COPY minio /usr/bin/
 COPY CREDITS /third_party/
 
 WORKDIR /usr/bin/browser 
 RUN npm run release
 
 WORKDIR /usr/bin
-ENV MINIO_UPDATE off
-ENV MINIO_ACCESS_KEY_FILE=access_key \
+ENV MINIO_UPDATE=off \
+    MINIO_ACCESS_KEY_FILE=access_key \
     MINIO_SECRET_KEY_FILE=secret_key \
     MINIO_KMS_MASTER_KEY_FILE=kms_master_key \
     MINIO_SSE_MASTER_KEY_FILE=sse_master_key
 
 RUN \
      apt-get install -y ca-certificates && \
+     make && \
      echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
      chmod +x /usr/bin/minio  && \
      chmod +x /usr/bin/docker-entrypoint.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh echo"]
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 VOLUME ["/data"]
 
