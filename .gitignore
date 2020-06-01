@@ -26,3 +26,4 @@ config.json
 browser/github-com-kevinburke-go-bindata-go-bindata-linux-amd64.tar.gz
 browser/github-com-kevinburke-go-bindata-go-bindata-linux-amd64.tar.gz.1
 browser/go-bindata
+browser/dev
