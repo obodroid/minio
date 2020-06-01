@@ -1,11 +1,43 @@
-FROM alpine:3.10
+FROM ubuntu
 
 LABEL maintainer="MinIO Inc <dev@min.io>"
 
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
+    git golang make npm curl
+RUN  set -ex; \
+     \
+     curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c; \
+     \
+     fetch_deps='gcc libc-dev'; \
+     apt-get update; \
+     apt-get install -y --no-install-recommends $fetch_deps; \
+     rm -rf /var/lib/apt/lists/*; \
+     gcc -Wall \
+         /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec; \
+     chown root:root /usr/local/bin/su-exec; \
+     chmod 0755 /usr/local/bin/su-exec; \
+     rm /usr/local/bin/su-exec.c; \
+     \
+     apt-get purge -y --auto-remove $fetch_deps
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
+ENV PATH=$PATH:/root/go/bin
+
+RUN go get github.com/go-bindata/go-bindata/go-bindata && \
+    go get github.com/elazarl/go-bindata-assetfs/go-bindata-assetfs
+
 COPY dockerscripts/docker-entrypoint.sh /usr/bin/
+COPY . /usr/bin
 COPY minio /usr/bin/
 COPY CREDITS /third_party/
 
+WORKDIR /usr/bin/browser 
+RUN npm run release
+
+WORKDIR /usr/bin
 ENV MINIO_UPDATE off
 ENV MINIO_ACCESS_KEY_FILE=access_key \
     MINIO_SECRET_KEY_FILE=secret_key \
@@ -13,14 +45,14 @@ ENV MINIO_ACCESS_KEY_FILE=access_key \
     MINIO_SSE_MASTER_KEY_FILE=sse_master_key
 
 RUN \
-     apk add --no-cache ca-certificates 'curl>7.61.0' 'su-exec>=0.2' && \
+     apt-get install -y ca-certificates && \
      echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
      chmod +x /usr/bin/minio  && \
      chmod +x /usr/bin/docker-entrypoint.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh echo"]
 
 VOLUME ["/data"]
 
