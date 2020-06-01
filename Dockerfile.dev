@@ -34,6 +34,12 @@ COPY . /usr/bin
 COPY CREDITS /third_party/
 
 WORKDIR /usr/bin/browser 
+
+RUN git init
+RUN git add .
+RUN git config --global user.email "you@example.com" && \
+    git config --global user.name "Your Name"
+RUN git commit -m "init commit"
 RUN npm run release
 
 WORKDIR /usr/bin
