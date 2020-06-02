@@ -2,7 +2,8 @@ FROM ubuntu
 
 LABEL maintainer="MinIO Inc <dev@min.io>"
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
     git golang make npm curl ca-certificates && \
     set -ex; \
      curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c; \
