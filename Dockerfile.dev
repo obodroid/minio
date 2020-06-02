@@ -2,27 +2,16 @@ FROM ubuntu
 
 LABEL maintainer="MinIO Inc <dev@min.io>"
 
-RUN apt-get update
-RUN apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
-    git golang make npm curl
-RUN  set -ex; \
-     \
+    git golang make npm curl ca-certificates && \
+    set -ex; \
      curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c; \
-     \
      fetch_deps='gcc libc-dev'; \
-     apt-get update; \
      apt-get install -y --no-install-recommends $fetch_deps; \
-    #  rm -rf /var/lib/apt/lists/*; \
      gcc -Wall \
          /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec; \
      chown root:root /usr/local/bin/su-exec; \
      chmod 0755 /usr/local/bin/su-exec;
-    #  rm /usr/local/bin/su-exec.c; \
-    #  \
-    #  apt-get purge -y --auto-remove $fetch_deps
-# RUN apt-get clean
-# RUN rm -rf /var/lib/apt/lists/*
 ENV PATH=$PATH:/root/go/bin
 
 RUN go get github.com/go-bindata/go-bindata/go-bindata && \
@@ -30,7 +19,6 @@ RUN go get github.com/go-bindata/go-bindata/go-bindata && \
 
 COPY dockerscripts/docker-entrypoint.sh /usr/bin/
 COPY . /usr/bin
-# COPY minio /usr/bin/
 COPY CREDITS /third_party/
 
 WORKDIR /usr/bin/browser 
