@@ -62,6 +62,7 @@ export const MainActions = ({
                 style={{ display: "none" }}
                 id="file-input"
                 multiple={true}
+                accept="video/mp4,video/x-m4v,video/*,video/quicktime"
               />
               <label htmlFor="file-input">
                 {" "}
