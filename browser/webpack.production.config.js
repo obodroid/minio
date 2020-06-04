@@ -19,6 +19,16 @@ var path = require('path')
 var glob = require('glob-all')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var PurgecssPlugin = require('purgecss-webpack-plugin')
+const dotenv = require('dotenv');
+
+// call dotenv and it will return an Object with a parsed key 
+const env = dotenv.config().parsed;
+
+// reduce it to a nice object, the same as before
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 var exports = {
   context: __dirname,
@@ -84,7 +94,8 @@ var exports = {
         path.join(__dirname, 'app/index.html'),
         path.join(__dirname, 'app/js/*.js')
       ])
-    })
+    }),
+    new webpack.DefinePlugin(envKeys)
   ]
 }
 

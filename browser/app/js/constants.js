@@ -39,4 +39,4 @@ export const SORT_BY_LAST_MODIFIED = "last-modified"
 export const SORT_ORDER_ASC = "asc"
 export const SORT_ORDER_DESC = "desc"
 
-export const ADMIN_USERNAME = "minioadmin"
+export const ADMIN_USERNAME = process.env.REACT_APP_MINIO_ACCESS_KEY
