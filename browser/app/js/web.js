@@ -39,13 +39,15 @@ class Web {
         }
         if (err.status)
           throw new Error(`Server returned error [${err.status}]`)
-        throw new Error('MinIO server is unreachable')
+        throw new Error('Server is unreachable')
       })
       .then(res => {
         let json = JSON.parse(res.text)
         let result = json.result
         let error = json.error
         if (error) {
+          console.log(error);
+          
           throw new Error(error.message)
         }
         if (!Moment(result.uiVersion).isValid()) {

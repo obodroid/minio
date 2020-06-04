@@ -55,10 +55,10 @@ export class Login extends React.Component {
     const { showAlert, clearAlert, history } = this.props
     let message = ""
     if (this.state.accessKey === "") {
-      message = "Access Key cannot be empty"
+      message = "Username cannot be empty"
     }
     if (this.state.secretKey === "") {
-      message = "Secret Key cannot be empty"
+      message = "Password cannot be empty"
     }
     if (message) {
       showAlert("danger", message)

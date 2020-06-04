@@ -459,7 +459,7 @@ var errorCodes = errorCodeMap{
 	},
 	ErrInvalidAccessKeyID: {
 		Code:           "InvalidAccessKeyId",
-		Description:    "The Access Key Id you provided does not exist in our records.",
+		Description:    "The Username and/or Password is incorrect.",
 		HTTPStatusCode: http.StatusForbidden,
 	},
 	ErrInvalidBucketName: {

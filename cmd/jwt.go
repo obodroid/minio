@@ -42,7 +42,7 @@ const (
 )
 
 var (
-	errInvalidAccessKeyID   = errors.New("The access key ID you provided does not exist in our records")
+	errInvalidAccessKeyID   = errors.New("The Username and/or Password is incorrect")
 	errChangeCredNotAllowed = errors.New("Changing access key and secret key not allowed")
 	errAuthentication       = errors.New("Authentication failed, check your access credentials")
 	errNoAuthToken          = errors.New("JWT token missing")
