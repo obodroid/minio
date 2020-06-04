@@ -23,7 +23,7 @@ export class RenameObjectModal extends React.Component {
                 "newObjectName": this.state.objectName
             })
         };
-        fetch('http://localhost:3000/bucket/rename-object', requestOptions)
+        fetch(process.env.WebserverAPI + '/bucket/rename-object', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
