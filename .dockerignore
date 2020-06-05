@@ -1,3 +1,4 @@
 .git
 .github
 minio
+browser/node_modules
