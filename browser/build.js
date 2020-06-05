@@ -61,14 +61,15 @@ async.waterfall([
         fs.renameSync('dev/index_bundle.js',
                       'dev/index_bundle-' + releaseTag + '.js')
       }
-      var cmd = 'git log --format="%H" -n1'
+      // var cmd = 'git log --format="%H" -n1'
+      var cmd = 'echo'
       console.log('Running', cmd)
       exec(cmd, cb)
     },
     function(stdout, stderr, cb) {
-      if (!stdout) throw new Error('commitId is empty')
-      commitId = stdout.replace('\n', '')
-      if (commitId.length !== 40) throw new Error('commitId invalid : ' + commitId)
+      // if (!stdout) throw new Error('commitId is empty')
+      // commitId = stdout.replace('\n', '')
+      // if (commitId.length !== 40) throw new Error('commitId invalid : ' + commitId)
       assetsFileName = 'ui-assets.go';
       var cmd = 'go-bindata-assetfs -o bindata_assetfs.go -pkg browser -nocompress=true production/...'
       if (!isProduction) {
