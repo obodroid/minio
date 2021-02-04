@@ -21,7 +21,3 @@ RUN \
 EXPOSE 9000
 
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
-
-# VOLUME ["/data"]
-
-# CMD ["minio"]
