@@ -26,8 +26,7 @@ import storage from 'local-storage-fallback'
 export const MainActions = ({
   prefixWritable,
   uploadFile,
-  showMakeBucketModal,
-  showErrorFileExtension
+  showMakeBucketModal
 }) => {
   const uploadTooltip = <Tooltip id="tt-upload-file">Upload file</Tooltip>
   const makeBucketTooltip = (
@@ -37,19 +36,6 @@ export const MainActions = ({
     e.preventDefault()
     let files = e.target.files
     let filesToUploadCount = files.length
-    let flag = false
-    for (let i = 0; i < filesToUploadCount; i++) {
-      let accept = "video/mp4,video/x-m4v,video/*,video/quicktime"
-      accept.split(",").forEach((element) => {
-        if (new RegExp(element.replace('*', '.\*')).test(files[i].type)) {
-          flag = true
-        }
-      })
-    }
-    if (!flag) {
-      showErrorFileExtension()
-      return
-    }
     for (let i = 0; i < filesToUploadCount; i++) {
       uploadFile(files.item(i))
     }
@@ -116,8 +102,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     uploadFile: file => dispatch(uploadsActions.uploadFile(file)),
-    showMakeBucketModal: () => dispatch(actionsBuckets.showMakeBucketModal()),
-    showErrorFileExtension: () => dispatch(uploadsActions.showErrorFileExtension())
+    showMakeBucketModal: () => dispatch(actionsBuckets.showMakeBucketModal())
   }
 }
 

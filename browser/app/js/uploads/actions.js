@@ -58,14 +58,14 @@ export const hideAbortModal = () => ({
 let requests = {}
 
 export const addUpload = (xhr, slug, size, name) => {
-  return function (dispatch) {
+  return function(dispatch) {
     requests[slug] = xhr
     dispatch(add(slug, size, name))
   }
 }
 
 export const abortUpload = slug => {
-  return function (dispatch) {
+  return function(dispatch) {
     const xhr = requests[slug]
     if (xhr) {
       xhr.abort()
@@ -75,20 +75,8 @@ export const abortUpload = slug => {
   }
 }
 
-export const showErrorFileExtension = () => {
-  return function (dispatch, getState) {
-    dispatch(
-      alertActions.set({
-        type: "danger",
-        message: "File not support. Please use video file extension (e.g. mp4)"
-      })
-    )
-    return
-  }
-}
-
 export const uploadFile = file => {
-  return function (dispatch, getState) {
+  return function(dispatch, getState) {
     const state = getState()
     const currentBucket = getCurrentBucket(state)
     if (!currentBucket) {
@@ -104,7 +92,7 @@ export const uploadFile = file => {
     const objectName = `${currentPrefix}${file.name}`
     const uploadUrl = `${
       window.location.origin
-      }${minioBrowserPrefix}/upload/${currentBucket}/${objectName}`
+    }${minioBrowserPrefix}/upload/${currentBucket}/${objectName}`
     const slug = `${currentBucket}-${currentPrefix}-${file.name}`
 
     let xhr = new XMLHttpRequest()
@@ -126,7 +114,7 @@ export const uploadFile = file => {
 
     dispatch(addUpload(xhr, slug, file.size, file.name))
 
-    xhr.onload = function (event) {
+    xhr.onload = function(event) {
       if (xhr.status == 401 || xhr.status == 403) {
         dispatch(hideAbortModal())
         dispatch(stop(slug))
