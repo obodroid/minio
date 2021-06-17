@@ -38,7 +38,7 @@ export class ShareObjectModal extends React.Component {
       }
     }
     this.expiryRange = {
-      days: { min: 0, max: 999 },
+      days: { min: 0, max: 365 },
       hours: { min: 0, max: 23 },
       minutes: { min: 0, max: 59 }
     }
@@ -48,7 +48,7 @@ export class ShareObjectModal extends React.Component {
 
     // Not allowing any increments if days is already max
     if (expiry.days == this.expiryRange["days"].max && inc > 0) {
-      return
+      expiry.days = 0
     }
 
     const { min, max } = this.expiryRange[param]
@@ -103,7 +103,7 @@ export class ShareObjectModal extends React.Component {
             className="input-group"
             style={{ display: web.LoggedIn() ? "block" : "none" }}
           >
-            <label>Expires in (Max 999 days)</label>
+            <label>Expires in (Max 365 days)</label>
             <div className="set-expire">
               <div className="set-expire-item">
                 <i
@@ -117,7 +117,7 @@ export class ShareObjectModal extends React.Component {
                     ref="expireDays"
                     type="number"
                     min={0}
-                    max={999}
+                    max={365}
                     value={this.state.expiry.days}
                   />
                 </div>
